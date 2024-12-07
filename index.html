@@ -3,70 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consejos Aleatorios</title>
+    <title>Oráculo de las Almas</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #4a235a;
-            text-align: center;
             margin: 0;
             padding: 0;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+            color: #f4f4f4;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
         }
-        .container {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #5e2d79;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 80%;
-            max-width: 500px;
-            margin: auto;
-        }
+
         h1 {
-            color: #FFD700; /* Amarillo brillante */
+            font-size: 4.5rem;
+            color: #ffd700;
+            text-shadow: 0 0 15px #ffd700, 0 0 30px #ffae00;
+            margin-bottom: 20px;
         }
+
         p {
-            color: #FFFFFF; /* Blanco */
-        }
-        #advice {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #FFD700; /* Amarillo brillante */
-            font-style: italic;
+            font-size: 1.2rem;
             margin-bottom: 30px;
         }
+
+        #advice {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #f1ff41;
+            text-shadow: 0 0 10px #ff6f61, 0 0 20px #ff3d3d;
+            display: none;
+        }
+
         button {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            background-color: #4CAF50;
-            color: white;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ffd700, #ffae00);
             border: none;
-            border-radius: 5px;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            box-shadow: 0 0 10px #ffd700, 0 0 20px #ffae00;
             cursor: pointer;
+            transition: transform 0.3s, opacity 0.3s;
         }
+
         button:hover {
-            background-color: #f4d03f;
+            transform: scale(1.1);
         }
+
+        button:active {
+            transform: scale(0.9);
+        }
+
         button:disabled {
-            background-color: #D3D3D3;
-            color: #A9A9A9;
-            cursor: not-allowed;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .magic-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, #ffd700, transparent);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-200px) translateX(50px);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-400px) translateX(-50px);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="magic-particles"></div>
 
-<div class="container">
-    <h1>Bienvenidos al oráculo de las Almas</h1>
-    <p>Hoy, las almas que nos cuidan y guían están aquí para ofrecerte un consejo. Abre tu corazón, respira profundamente y permite que la sabiduría del universo ilumine tu camino. El consejo de hoy te espera.</p>
-    <div id="advice">Haz clic en el botón para ver tu consejo único.</div>
-    <button id="advice-button" onclick="giveAdvice()">Generar Consejo</button>
-</div>
+    <h1>Bienvenidos al Oráculo de las Almas</h1>
+    <p>Hoy, las almas que nos guían están aquí para ofrecerte un consejo. Respira profundamente y abre tu corazón.</p>
+    <button id="advice-button" onclick="giveAdvice()">Quiero mi consejo</button>
+    <div id="advice"></div>
 
-<script>
-    // Lista completa de consejos
-    const consejos = [
-        "La vida es 10% lo que te sucede y 90% cómo reaccionas ante ello.",
+    <script>
+        // Generar partículas mágicas
+        const particleContainer = document.querySelector('.magic-particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.top = `${Math.random() * 100}vh`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particle.style.animationDuration = `${3 + Math.random() * 3}s`;
+            particleContainer.appendChild(particle);
+        }
+
+        // Lista de consejos
+        const consejos = [
+            "Confía en el proceso, todo llega en el momento perfecto.",
+            "La luz siempre encuentra su camino en la oscuridad.",
+            "Eres más fuerte de lo que imaginas.",
+            "El amor empieza contigo mismo.",
+            "Cada día es una oportunidad para brillar.",
+       "La vida es 10% lo que te sucede y 90% cómo reaccionas ante ello.",
         "No dejes para mañana lo que puedes hacer hoy.",
         "La perseverancia es la clave del éxito.",
         "No te preocupes por los errores, aprende de ellos.",
@@ -116,15 +180,15 @@
         "El éxito es aprender a ir de fracaso en fracaso sin perder el entusiasmo.",
         "La vida es corta, haz que cada día cuente.",
         "Si no te desafía, no te cambia."
-    ];
+        ];
 
-    // Función para mostrar un consejo aleatorio y desactivar el botón
-    function giveAdvice() {
-        const randomIndex = Math.floor(Math.random() * consejos.length);
-        document.getElementById('advice').textContent = consejos[randomIndex];
-        document.getElementById('advice-button').disabled = true; // Desactiva el botón
-    }
-</script>
-
+        function giveAdvice() {
+            const randomIndex = Math.floor(Math.random() * consejos.length);
+            document.getElementById('advice').textContent = consejos[randomIndex];
+            document.getElementById('advice').style.display = 'block';
+            const button = document.getElementById('advice-button');
+            button.disabled = true; // Desactiva el botón
+        }
+    </script>
 </body>
 </html>
